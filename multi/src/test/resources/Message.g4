@@ -28,16 +28,10 @@ value
     | call
     ;
 
-WS
-    : [ \t\n\r] -> skip
-    ;
-
-
 fragment
 Int
     : [0-9]+
     ;
-
 
 Integer
     : '-'? Int
@@ -59,4 +53,8 @@ String
 
 Identity
     : ~[()[\]{},:=\\" ]+
+    ;
+
+WS
+    : [ \t\n\r] -> skip
     ;

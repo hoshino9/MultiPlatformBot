@@ -1,10 +1,9 @@
 package org.hoshino9.handle
 
 import org.hoshino9.message.ErrorMessage
-import org.hoshino9.robot.dialog.Dialog
-import org.hoshino9.robot.dialog.Member
-import org.hoshino9.robot.handle.HandlerCenter
+import org.hoshino9.robot.handle.GroupHandler
 import org.hoshino9.robot.handle.HandlerContainer
+import org.hoshino9.robot.handle.MessageReceiveHandler
 import org.hoshino9.robot.message.RawStringMessage
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
@@ -13,12 +12,12 @@ import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.functions
 
 @Suppress("unused")
-class Main(dialog: Dialog, sender: Member, center: HandlerCenter) : HandlerContainer(dialog, sender, center) {
+class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
     private val menu: List<String> = listOf("井字期局")
 
     @Name("菜单")
     fun menu() {
-        dialog.send(RawStringMessage("什么都没有"))
+        group.send(RawStringMessage("什么都没有"))
     }
 
     @Name("搜索")
@@ -35,7 +34,11 @@ class Main(dialog: Dialog, sender: Member, center: HandlerCenter) : HandlerConta
         } ?: ErrorMessage("没有找到这个指令")).run(dialog::send)
     }
 
-    companion object {
+    companion object : Factory {
+        override fun newInstance(ctx: MessageReceiveHandler.Context): HandlerContainer? {
+            return Main(ctx)
+        }
+
         val containers = listOf(
             Main::class,
             Money::class,
@@ -43,7 +46,7 @@ class Main(dialog: Dialog, sender: Member, center: HandlerCenter) : HandlerConta
         )
 
         private fun typeTrans(param: KParameter): String {
-            return when ((param.type.classifier as? KClass<*>)?.simpleName ?: return "未知") {
+            return "${param.name}: " + when ((param.type.classifier as? KClass<*>)?.simpleName ?: return "未知") {
                 "Int" -> "数字"
                 "String" -> "字符串"
                 "Member" -> "@"

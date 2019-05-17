@@ -4,7 +4,9 @@ import org.hoshino9.handle.SharpChess
 import org.hoshino9.propertyInit
 import org.hoshino9.robot.dialog.Group
 import org.hoshino9.robot.dialog.Member
-import org.hoshino9.robot.handle.HandlerCenter
+import org.hoshino9.robot.handle.MessageHandler
+import org.hoshino9.robot.handle.MessageReceiveHandler
+import org.hoshino9.robot.message.Message
 import org.hoshino9.robot.message.RawStringMessage
 import org.hoshino9.robot.parser.internal.InternalMessageParser
 
@@ -41,10 +43,12 @@ class SharpChessTest {
                 player0 to "井字棋下棋(2, 2)"
             )
 
-            val center = HandlerCenter(InternalMessageParser())
+            val newCtx = fun(member: Member, message: Message): MessageReceiveHandler.Context {
+                return MessageReceiveHandler.Context(InternalMessageParser(), listOf(SharpChess), group, member, message)
+            }
 
             msg.forEach { (sender, msg) ->
-                center.handle(listOf(SharpChess(group, sender, center)), RawStringMessage(msg))
+                MessageHandler.handle(newCtx(sender, RawStringMessage(msg)))
             }
         }
     }
