@@ -3,6 +3,28 @@ package org.hoshino9.robot.dialog
 import org.hoshino9.robot.message.Message
 
 open class Group(override val id: Long) : Dialog {
+    private fun log(msg: String) {
+        println("[Group: $id]\n$msg")
+    }
+
+    val name: String get() = id.toString()
+
+    fun name(member: Member): String {
+        return "($id, $member)"
+    }
+
+    fun kick(target: Member) {
+        log("kicked $target")
+    }
+
+    fun shutUp(target: Member, seconds: Long) {
+        log("shut up $target ($seconds s)")
+    }
+
+    fun shutUp(isShutUp: Boolean) {
+        log("${if (isShutUp) "" else "Release"} shut up all members")
+    }
+
     override fun send(message: Message) {
         message.sendGroup(this)
     }

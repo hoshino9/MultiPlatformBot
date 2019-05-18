@@ -9,7 +9,6 @@ import org.hoshino9.robot.handle.MessageHandler
 import org.hoshino9.robot.handle.MessageReceiveHandler
 import org.hoshino9.robot.message.RawStringMessage
 import org.junit.Test
-import kotlin.reflect.full.primaryConstructor
 
 class ParserTest {
     init {
@@ -20,7 +19,7 @@ class ParserTest {
     fun parse() {
         val dialog = Group(111)
         val sender = Member(123)
-        val msg = RawStringMessage("""搜索("搜索")""".trimMargin())
+        val msg = RawStringMessage("""搜索("搜索\\\n")""".trimMargin())
         val handlers = Main.containers.mapNotNull { it.nestedClasses.first { it.simpleName == "Companion" }.objectInstance as? HandlerContainer.Factory }
 
         val context = MessageReceiveHandler.Context(InternalMessageParser(), handlers, dialog, sender, msg)

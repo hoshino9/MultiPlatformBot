@@ -14,11 +14,12 @@ class LexerTest {
         val at = "[At:999]"
         val img = """[img="999"]"""
 
-        val lexer = MessageLexer(CharStreams.fromString("$id($integer, $string, $array, $at, $img, $id())"))
+        val str = "$id($integer, $string, $array, $at, $img, $id())"
+        val lexer = MessageLexer(CharStreams.fromString(str))
         val tokens = CommonTokenStream(lexer)
         val parser = MessageParser(tokens)
         parser.errorHandler = BailErrorStrategy()
 
-        parser.call()
+        parser.call().text.run(::println)
     }
 }

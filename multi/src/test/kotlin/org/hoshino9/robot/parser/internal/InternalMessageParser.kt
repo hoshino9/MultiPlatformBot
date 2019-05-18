@@ -9,8 +9,40 @@ import org.hoshino9.robot.parser.FunctionCall
 import org.hoshino9.robot.parser.MessageParser
 import org.hoshino9.robot.parser.internal.MessageParser.*
 
-
 class InternalMessageParser : MessageParser {
+    private class StringParser(val str: String) {
+        private var index = 0
+        private val current get() = str[index]
+        private fun next(): Char {
+            ++ index
+
+            return current
+        }
+
+        fun escape(): Char {
+            return if (current == '\\') {
+                when (next()) {
+                    'n' -> '\n'
+                    'r' -> '\n'
+                    '\\' -> '\\'
+                    '"' -> '"'
+
+                    else -> throw IllegalStateException("\\$current")
+                }
+            } else throw IllegalStateException(current.toString())
+        }
+
+        fun parse(): String {
+            if (current != '"') throw IllegalStateException(current.toString())
+
+            return buildString {
+                while (next() != '"') {
+                    (if (current == '\\') escape() else current).run(::append)
+                }
+            }
+        }
+    }
+
     private fun convertValue(ctx: ValueContext): Any? {
         return when {
             ctx.array() != null -> {
@@ -22,7 +54,7 @@ class InternalMessageParser : MessageParser {
             ctx.at() != null -> Member(ctx.at().Integer().symbol.text.toLong())
             ctx.img() != null -> throw IllegalArgumentException("Image argument was not supported")
             ctx.Integer() != null -> ctx.Integer().symbol.text.toInt()
-            ctx.String() != null -> ctx.String().text.drop(1).dropLast(1)
+            ctx.String() != null -> StringParser(ctx.String().text).parse()
 
             else -> throw IllegalArgumentException(ctx.text)
         }

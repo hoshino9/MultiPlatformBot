@@ -2,7 +2,6 @@ package org.hoshino9.robot.message.component
 
 import org.hoshino9.robot.message.ConsoleMessage
 import org.hoshino9.robot.message.Message
-import org.hoshino9.robot.message.RawStringMessage
 import java.util.*
 
 open class ComponentsMessage : ConsoleMessage() {

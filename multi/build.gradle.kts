@@ -17,7 +17,7 @@ val genAntlr = task<JavaExec>("genAntlr") {
 dependencies {
     compile(group = "org.antlr", name = "antlr4", version = "4.7.2")
     compile(project(":handler"))
-    compileOnly(project(":message"))
+    compileOnly(project(":base"))
     testCompile(kotlin("test-junit"))
-    testCompile(project(":message"))
+    testCompile(project(":base"))
 }

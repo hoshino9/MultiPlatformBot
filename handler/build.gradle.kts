@@ -1,4 +1,3 @@
 dependencies {
-    compile(project(":base"))
-    compileOnly(project(":message"))
+    compileOnly(project(":base"))
 }

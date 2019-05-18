@@ -52,7 +52,7 @@ String
     ;
 
 Identity
-    : ~[()[\]{},:=\\" ]+
+    : [a-zA-Z\u4E00-\u9FA5] [0-9a-zA-Z\u4E00-\u9FA5]*
     ;
 
 WS

@@ -31,7 +31,7 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
             method.parameters.drop(1).joinToString(transform = ::typeTrans).let {
                 RawStringMessage("$name($it)")
             }
-        } ?: ErrorMessage("没有找到这个指令")).run(dialog::send)
+        } ?: ErrorMessage("没有找到这个指令: $name")).run(dialog::send)
     }
 
     companion object : Factory {

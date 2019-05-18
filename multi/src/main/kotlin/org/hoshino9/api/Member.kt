@@ -1,6 +1,5 @@
 package org.hoshino9.api
 
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import org.hoshino9.api.Api.root
 import org.hoshino9.robot.dialog.Group
