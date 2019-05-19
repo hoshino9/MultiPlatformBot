@@ -17,9 +17,9 @@ class ParserTest {
 
     @Test
     fun parse() {
-        val dialog = Group(111)
+        val dialog = Group(999)
         val sender = Member(123)
-        val msg = RawStringMessage("""搜索("搜索\\\n")""".trimMargin())
+        val msg = RawStringMessage("""钱包()""".trimMargin())
         val handlers = Main.containers.mapNotNull { it.nestedClasses.first { it.simpleName == "Companion" }.objectInstance as? HandlerContainer.Factory }
 
         val context = MessageReceiveHandler.Context(InternalMessageParser(), handlers, dialog, sender, msg)

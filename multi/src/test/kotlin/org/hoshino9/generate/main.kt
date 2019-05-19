@@ -11,7 +11,7 @@ fun main() {
         arrayOf(
             "./src/test/resources/Message.g4",
             "-package", packageName,
-            "-o", "./src/test/generate/${packageName.replace('.', '/')}"
+            "-o", "./src/test/gen/${packageName.replace('.', '/')}"
         )
     )
 }

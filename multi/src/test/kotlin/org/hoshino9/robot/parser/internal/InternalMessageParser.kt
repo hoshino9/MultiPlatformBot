@@ -7,7 +7,6 @@ import org.hoshino9.robot.dialog.Member
 import org.hoshino9.robot.message.Message
 import org.hoshino9.robot.parser.FunctionCall
 import org.hoshino9.robot.parser.MessageParser
-import org.hoshino9.robot.parser.internal.MessageParser.*
 
 class InternalMessageParser : MessageParser {
     private class StringParser(val str: String) {
@@ -43,7 +42,7 @@ class InternalMessageParser : MessageParser {
         }
     }
 
-    private fun convertValue(ctx: ValueContext): Any? {
+    private fun convertValue(ctx: org.hoshino9.robot.parser.internal.MessageParser.ValueContext): Any? {
         return when {
             ctx.array() != null -> {
                 ctx.array().value().map {
@@ -51,8 +50,8 @@ class InternalMessageParser : MessageParser {
                 }
             }
 
-            ctx.at() != null -> Member(ctx.at().Integer().symbol.text.toLong())
-            ctx.img() != null -> throw IllegalArgumentException("Image argument was not supported")
+            ctx.At() != null -> atRegex.matchEntire(ctx.At().text)!!.groupValues[1].toLong().run(::Member)
+            ctx.Img() != null -> throw IllegalArgumentException("Image argument was not supported")
             ctx.Integer() != null -> ctx.Integer().symbol.text.toInt()
             ctx.String() != null -> StringParser(ctx.String().text).parse()
 
@@ -79,5 +78,10 @@ class InternalMessageParser : MessageParser {
             e.printStackTrace()
             return null
         }
+    }
+
+    companion object {
+        private val atRegex = Regex("""\[At:(\d+)]""")
+        private val imgRegex = Regex("""\[img="(.+?)"]""")
     }
 }

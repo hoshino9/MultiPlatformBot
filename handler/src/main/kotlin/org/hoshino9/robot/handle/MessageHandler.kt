@@ -16,12 +16,13 @@ object MessageHandler : MessageReceiveHandler {
                 return@forEach
             }
 
-            val method = container::class.functions.firstOrNull { method ->
+            val method = container::class.functions.filter { method ->
                 call.functionName == method.findAnnotation<HandlerContainer.Name>()?.name
-            } ?: return@forEach
+            }.takeIf { it.isNotEmpty() } ?: return@forEach
 
             try {
-                method.call(container, *call.arguments)
+                method.firstOrNull { it.parameters.size == call.arguments.size + 1 }
+                    ?.call(container, *call.arguments)
             } catch (e: Throwable) {
                 e.printStackTrace()
             } finally {

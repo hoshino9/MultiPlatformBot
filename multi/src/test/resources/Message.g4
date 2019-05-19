@@ -1,12 +1,5 @@
 grammar Message;
 
-at
-    : '[At:' Integer ']'
-    ;
-
-img
-    : '[img=' String ']'
-    ;
 
 array
     : '[' value (',' value)* ']'
@@ -23,8 +16,8 @@ value
     | String
     | Identity
     | array
-    | at
-    | img
+    | At
+    | Img
     | call
     ;
 
@@ -53,6 +46,14 @@ String
 
 Identity
     : [a-zA-Z\u4E00-\u9FA5] [0-9a-zA-Z\u4E00-\u9FA5]*
+    ;
+
+At
+    : '[At:' Integer ']'
+    ;
+
+Img
+    : '[img=' String ']'
     ;
 
 WS

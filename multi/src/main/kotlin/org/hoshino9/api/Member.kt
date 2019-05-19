@@ -41,6 +41,7 @@ open class Member(val group: Group, id: Long) : DialogMember(id) {
 
         if (dateString == record) throw SignInException(this, "您已经签到过了") else {
             this.money += info.money
+            signInDate = dateString
         }
     }
 

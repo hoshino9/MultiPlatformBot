@@ -1,6 +1,7 @@
 package org.hoshino9.handle
 
 import org.hoshino9.message.ErrorMessage
+import org.hoshino9.robot.dialog.Member
 import org.hoshino9.robot.handle.GroupHandler
 import org.hoshino9.robot.handle.HandlerContainer
 import org.hoshino9.robot.handle.MessageReceiveHandler
@@ -22,15 +23,23 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
 
     @Name("搜索")
     fun info(name: String) {
-        lateinit var method: KFunction<*>
+        lateinit var methods: List<KFunction<*>>
         (containers.firstOrNull { `class` ->
-            `class`.functions.firstOrNull { method ->
+            //            `class`.functions.firstOrNull { method ->
+//                method.findAnnotation<Name>()?.name == name
+//            }?.apply { method = this } != null
+            `class`.functions.filter { method ->
                 method.findAnnotation<Name>()?.name == name
-            }?.apply { method = this } != null
+            }.takeIf { it.isNotEmpty() }?.apply { methods = this } != null
         }?.let { _ ->
-            method.parameters.drop(1).joinToString(transform = ::typeTrans).let {
-                RawStringMessage("$name($it)")
-            }
+//            method.parameters.drop(1).joinToString(transform = ::typeTrans).let {
+//                RawStringMessage("$name($it)")
+//            }
+            methods.joinToString(separator = "\n") { method ->
+                method.parameters.drop(1).joinToString(transform = ::typeTrans).let {
+                    "$name($it)"
+                }
+            }.run(::RawStringMessage)
         } ?: ErrorMessage("没有找到这个指令: $name")).run(dialog::send)
     }
 
@@ -46,10 +55,10 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
         )
 
         private fun typeTrans(param: KParameter): String {
-            return "${param.name}: " + when ((param.type.classifier as? KClass<*>)?.simpleName ?: return "未知") {
-                "Int" -> "数字"
-                "String" -> "字符串"
-                "Member" -> "@"
+            return "${param.name}: " + when (param.type.classifier as? KClass<*>) {
+                Int::class -> "数字"
+                String::class -> "字符串"
+                Member::class -> "艾特"
 
                 else -> "未知"
             }

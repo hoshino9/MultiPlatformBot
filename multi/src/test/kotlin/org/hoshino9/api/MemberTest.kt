@@ -22,12 +22,16 @@ class MemberTest {
     @Test
     fun signIn() {
         val money = member.money
-        val info = member.signIn()
+        try {
+            val info = member.signIn()
 
-        assertEquals(money + info.money, member.money)
+            assertEquals(money + info.money, member.money)
 
-        println(money)
-        println(info)
-        println(member.money)
+            println(money)
+            println(info)
+            println(member.money)
+        } catch (e: SignInException) {
+            System.err.println(e.message)
+        }
     }
 }
