@@ -1,3 +1,3 @@
 rootProject.name = "robot"
 
-include(":base", ":handler", ":multi")
+include(":base", ":handler", ":multi", ":platformPansyQQ")

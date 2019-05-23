@@ -1,5 +1,4 @@
 plugins {
-    java
     kotlin("jvm") version "1.3.31"
 }
 
@@ -9,7 +8,6 @@ repositories {
 
 allprojects {
     apply {
-        plugin("java")
         plugin("kotlin")
     }
 
@@ -23,6 +21,5 @@ allprojects {
     dependencies {
         compile(kotlin("stdlib-jdk7"))
         compile(kotlin("reflect"))
-        compile(group = "com.google.code.gson", name = "gson", version = "2.8.5")
     }
 }
