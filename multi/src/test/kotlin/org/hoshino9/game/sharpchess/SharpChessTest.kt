@@ -44,7 +44,7 @@ class SharpChessTest {
             )
 
             val newCtx = fun(member: Member, message: Message): MessageReceiveHandler.Context {
-                return MessageReceiveHandler.Context(InternalMessageParser(), listOf(SharpChess), group, member, message)
+                return MessageReceiveHandler.Context(InternalMessageParser, listOf(SharpChess), group, member, message)
             }
 
             msg.forEach { (sender, msg) ->

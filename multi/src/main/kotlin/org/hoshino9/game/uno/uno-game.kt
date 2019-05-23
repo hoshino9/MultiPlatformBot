@@ -6,8 +6,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-class UNOException(message: String) : Exception(message)
+// TODO
 
+class UNOException(message: String) : Exception(message)
 
 data class UNORule @JvmOverloads constructor(
     val maxPlayer: Int = 4,                     // 最大游戏人数
@@ -25,7 +26,7 @@ class UNOPlayer(group: Group, id: Long, val game: UNOGame) : Member(group, id) {
     }
 
     fun use(index: Int) {
-        TODO()
+        game.use(this, index)
     }
 
     fun join() {

@@ -22,7 +22,7 @@ class ParserTest {
         val msg = RawStringMessage("""钱包()""".trimMargin())
         val handlers = Main.containers.mapNotNull { it.nestedClasses.first { it.simpleName == "Companion" }.objectInstance as? HandlerContainer.Factory }
 
-        val context = MessageReceiveHandler.Context(InternalMessageParser(), handlers, dialog, sender, msg)
+        val context = MessageReceiveHandler.Context(InternalMessageParser, handlers, dialog, sender, msg)
 
         MessageHandler.handle(context)
     }

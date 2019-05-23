@@ -5,15 +5,18 @@ import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import org.hoshino9.robot.dialog.Member
 import org.hoshino9.robot.message.Message
+import org.hoshino9.robot.message.RawStringMessage
+import org.hoshino9.robot.message.component.ImageMessage
 import org.hoshino9.robot.parser.FunctionCall
 import org.hoshino9.robot.parser.MessageParser
+import java.net.URI
 
-class InternalMessageParser : MessageParser {
+object InternalMessageParser : MessageParser {
     private class StringParser(val str: String) {
         private var index = 0
         private val current get() = str[index]
         private fun next(): Char {
-            ++ index
+            ++index
 
             return current
         }
@@ -42,6 +45,9 @@ class InternalMessageParser : MessageParser {
         }
     }
 
+    private val atRegex = Regex("""\[At:(\d+)]""")
+    private val imgRegex = Regex("""\[img:(\w+)="(.+?)"]""")
+
     private fun convertValue(ctx: org.hoshino9.robot.parser.internal.MessageParser.ValueContext): Any? {
         return when {
             ctx.array() != null -> {
@@ -51,9 +57,12 @@ class InternalMessageParser : MessageParser {
             }
 
             ctx.At() != null -> atRegex.matchEntire(ctx.At().text)!!.groupValues[1].toLong().run(::Member)
-            ctx.Img() != null -> throw IllegalArgumentException("Image argument was not supported")
+            ctx.Img() != null -> ctx.Img().text.run(imgRegex::matchEntire)!!.let {
+                ImageMessage(it.groupValues[1], it.groupValues[2].run(::URI))
+            }
             ctx.Integer() != null -> ctx.Integer().symbol.text.toInt()
             ctx.String() != null -> StringParser(ctx.String().text).parse()
+            ctx.call() != null -> parse(RawStringMessage(ctx.call().text))
 
             else -> throw IllegalArgumentException(ctx.text)
         }
@@ -78,10 +87,5 @@ class InternalMessageParser : MessageParser {
             e.printStackTrace()
             return null
         }
-    }
-
-    companion object {
-        private val atRegex = Regex("""\[At:(\d+)]""")
-        private val imgRegex = Regex("""\[img="(.+?)"]""")
     }
 }

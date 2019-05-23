@@ -2,6 +2,7 @@ package org.hoshino9.robot.handle
 
 import org.hoshino9.robot.dialog.Dialog
 import org.hoshino9.robot.dialog.Member
+import kotlin.reflect.KClass
 
 @Suppress("MemberVisibilityCanBePrivate", "unused", "CanBeParameter")
 abstract class HandlerContainer(val context: MessageReceiveHandler.Context) {
@@ -13,6 +14,8 @@ abstract class HandlerContainer(val context: MessageReceiveHandler.Context) {
     annotation class Name(val name: String)
 
     interface Factory {
+        val instanceClass: KClass<*>
+
         fun newInstance(ctx: MessageReceiveHandler.Context): HandlerContainer?
     }
 }

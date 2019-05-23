@@ -1,4 +1,7 @@
-val antlr = "antlr-4.7.1-complete"
+plugins {
+    antlr
+}
+
 val antlrSource = "./src/test/resources/Message.g4"
 val generateDir = "./src/test/gen/org/hoshino9/robot/parser/internal"
 val packageName = "org.hoshino9.robot.parser.internal"
@@ -12,6 +15,10 @@ sourceSets {
 val genAntlr = task<JavaExec>("genAntlr") {
     classpath = sourceSets.test.get().runtimeClasspath
     main = "org.hoshino9.generate.Generate"
+}
+
+tasks.withType<AntlrTask> {
+    outputDirectory = projectDir.resolve("src/test/gen")
 }
 
 dependencies {

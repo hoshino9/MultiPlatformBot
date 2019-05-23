@@ -12,6 +12,7 @@ import org.hoshino9.robot.handle.GroupHandler
 import org.hoshino9.robot.handle.HandlerContainer
 import org.hoshino9.robot.handle.MessageReceiveHandler
 import org.hoshino9.robot.message.RawStringMessage
+import kotlin.reflect.KClass
 
 @Suppress("unused")
 class SharpChess(context: MessageReceiveHandler.Context) : GroupHandler(context) {
@@ -138,6 +139,9 @@ class SharpChess(context: MessageReceiveHandler.Context) : GroupHandler(context)
     }
 
     companion object : Factory {
+        override val instanceClass: KClass<*>
+            get() = SharpChess::class
+
         override fun newInstance(ctx: MessageReceiveHandler.Context): HandlerContainer? {
             return SharpChess(ctx)
         }

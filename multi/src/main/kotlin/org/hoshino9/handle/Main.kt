@@ -24,7 +24,7 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
     @Name("搜索")
     fun info(name: String) {
         lateinit var methods: List<KFunction<*>>
-        (containers.firstOrNull { `class` ->
+        (context.handlers.map { it.instanceClass }.firstOrNull { `class` ->
             //            `class`.functions.firstOrNull { method ->
 //                method.findAnnotation<Name>()?.name == name
 //            }?.apply { method = this } != null
@@ -44,6 +44,8 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
     }
 
     companion object : Factory {
+        override val instanceClass: KClass<*> get() = Main::class
+
         override fun newInstance(ctx: MessageReceiveHandler.Context): HandlerContainer? {
             return Main(ctx)
         }

@@ -3,6 +3,7 @@ package org.hoshino9.api
 import com.google.gson.JsonObject
 import org.hoshino9.api.Api.root
 import org.hoshino9.robot.dialog.Group
+import org.hoshino9.utils.json
 import java.io.File
 import java.util.*
 import kotlin.random.Random
@@ -23,6 +24,8 @@ open class Member(val group: Group, id: Long) : DialogMember(id) {
     var money: Long by property
 
     /**
+     * 签到
+     *
      * @throws SignInException
      */
     fun signIn(): SignInInfo {
@@ -32,6 +35,8 @@ open class Member(val group: Group, id: Long) : DialogMember(id) {
     }
 
     /**
+     * 根据传入的 [info] 进行签到
+     *
      * @throws SignInException
      */
     fun signIn(info: SignInInfo) {
@@ -46,9 +51,9 @@ open class Member(val group: Group, id: Long) : DialogMember(id) {
     }
 
     companion object {
-        val defaultProperty: JsonObject = JsonObject().apply {
-            addProperty("money", 0)
-            addProperty("signInDate", "1970:01:01")
+        val defaultProperty: JsonObject = json {
+            "money" to 0
+            "signInDate" to "1970:01:01"
         }
     }
 }
