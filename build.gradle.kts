@@ -1,4 +1,5 @@
 plugins {
+    maven
     kotlin("jvm") version "1.3.31"
 }
 
@@ -8,6 +9,7 @@ repositories {
 
 allprojects {
     apply {
+        plugin("maven")
         plugin("kotlin")
     }
 
