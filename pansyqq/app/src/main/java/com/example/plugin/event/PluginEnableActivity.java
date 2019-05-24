@@ -3,9 +3,12 @@ package com.example.plugin.event;
 import android.app.Activity;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import com.example.plugin.PansyAPI;
 import com.example.plugin.R;
+import org.hoshino9.api.Api;
+
 import static com.example.plugin.APP.ACTION_GROUPEVENT_RECEIVE;
 import static com.example.plugin.APP.ACTION_QQMESSAGE_RECEIVE;
 import static com.example.plugin.APP.groupEventReceiver;
@@ -37,6 +40,9 @@ public class PluginEnableActivity extends Activity {
         if(pansy==null){
             pansy=new PansyAPI("com.example.plugin");
         }
+
+        Api.INSTANCE.setRoot(Environment.getExternalStorageDirectory().toPath().resolve("hoshino-plugin").toString());
+
         finish();
     }
 }

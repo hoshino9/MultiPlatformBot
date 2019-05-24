@@ -8,3 +8,6 @@ build/
 
 # generate
 gen/
+
+# local
+local.properties
