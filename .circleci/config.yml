@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - run:
+          name: Run Assemble
+          command: ./gradlew assembleRelease --info --warning-mode=all
+      - store_artifaces:
+          path: 'platform/pansyqq/build/outputs/apk/release'

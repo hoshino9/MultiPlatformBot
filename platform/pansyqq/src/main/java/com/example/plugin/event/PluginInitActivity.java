@@ -20,9 +20,9 @@ public class PluginInitActivity extends PluginActivity {
         Intent intent=new Intent();
         intent.setAction(ACTION_LOADPLUGIN_RECEIVE);
         intent.putExtra("plugin_packageName","com.example.plugin");//插件包名
-        intent.putExtra("plugin_name","demo");//插件名称
+        intent.putExtra("plugin_name","Hoshino Plugin");//插件名称
         intent.putExtra("plugin_brief","This is a demo plugin");//插件简介
-        intent.putExtra("plugin_author","Pansy");//插件作者
+        intent.putExtra("plugin_author","Hoshino");//插件作者
         intent.putExtra("plugin_version","1.0.0");//插件版本
         intent.putExtra("plugin_icon",res2ByteArray(R.drawable.plugin_icon));//插件图标
         sendBroadcast(intent);
