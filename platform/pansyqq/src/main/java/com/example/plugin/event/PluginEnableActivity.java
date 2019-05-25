@@ -1,10 +1,13 @@
 package com.example.plugin.event;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import com.example.plugin.PansyAPI;
 import com.example.plugin.R;
 import org.hoshino9.api.Api;
@@ -39,6 +42,11 @@ public class PluginEnableActivity extends Activity {
         //实例化API类
         if(pansy==null){
             pansy=new PansyAPI("com.example.plugin");
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, 9);
         }
 
         Api.INSTANCE.setRoot(Environment.getExternalStorageDirectory().toPath().resolve("hoshino-plugin").toString());

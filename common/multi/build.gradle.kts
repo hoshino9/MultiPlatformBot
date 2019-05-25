@@ -26,7 +26,6 @@ repositories {
 dependencies {
     compile(fileTree(mapOf("dir" to "libs", "include" to "*.jar")))
     compile(project(":common:handler"))
-    compile(kotlin("reflect"))
     compile(group = "com.google.code.gson", name = "gson", version = "2.8.5")
     compileOnly(project(":common:base"))
 

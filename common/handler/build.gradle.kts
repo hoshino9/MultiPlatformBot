@@ -8,5 +8,6 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib-jdk7"))
+    compile(kotlin("reflect"))
     compileOnly(project(":common:base"))
 }
