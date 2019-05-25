@@ -4,6 +4,7 @@ import org.hoshino9.message.ErrorMessage
 import org.hoshino9.robot.dialog.Member
 import org.hoshino9.robot.handle.GroupHandler
 import org.hoshino9.robot.handle.HandlerContainer
+import org.hoshino9.robot.handle.MessageHandler
 import org.hoshino9.robot.handle.MessageReceiveHandler
 import org.hoshino9.robot.message.RawStringMessage
 import kotlin.reflect.KClass
@@ -44,8 +45,8 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
     }
 
     @Name("模拟")
-    fun simulate(target: Member) {
-
+    fun simulate(target: Member, msg: String) {
+        MessageHandler.handle(context.copy(sender = target, message = RawStringMessage(msg)))
     }
 
     companion object : Factory {

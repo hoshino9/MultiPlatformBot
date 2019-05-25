@@ -24,7 +24,7 @@ class SharpChess(context: MessageReceiveHandler.Context) : GroupHandler(context)
         "创建井字棋对局()",
         "加入井字棋对局()",
         "开始井字棋对局()",
-        "井字棋盘()",
+        "井字棋棋盘()",
         "井字棋下棋(行: 数字(0-2), 列: 数字(0-2))"
     )
 
