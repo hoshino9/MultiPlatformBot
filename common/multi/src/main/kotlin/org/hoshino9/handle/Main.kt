@@ -43,6 +43,11 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
         } ?: ErrorMessage("没有找到这个指令: $name")).run(dialog::send)
     }
 
+    @Name("模拟")
+    fun simulate(target: Member) {
+
+    }
+
     companion object : Factory {
         override val instanceClass: KClass<*> get() = Main::class
 

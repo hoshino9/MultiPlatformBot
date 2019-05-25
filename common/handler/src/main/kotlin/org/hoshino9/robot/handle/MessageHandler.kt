@@ -1,5 +1,6 @@
 package org.hoshino9.robot.handle
 
+import org.hoshino9.robot.message.RawStringMessage
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.functions
 
@@ -20,8 +21,15 @@ object MessageHandler : MessageReceiveHandler {
                 call.functionName == method.findAnnotation<HandlerContainer.Name>()?.name
             }.takeIf { it.isNotEmpty() } ?: return@forEach
 
-            method.firstOrNull { it.parameters.size == call.arguments.size + 1 }
-                ?.call(container, *call.arguments)
+            try {
+                method.firstOrNull { it.parameters.size == call.arguments.size + 1 }
+                    ?.call(container, *call.arguments)
+            } catch (e: IllegalArgumentException) {
+                RawStringMessage("""
+                    出错了
+                    无法处理函数调用: ${e.message}
+                """.trimIndent()).run(context.dialog::send)
+            }
         }
     }
 }
