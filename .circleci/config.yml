@@ -9,7 +9,16 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Permission
+          command: 'chmod +x ./gradlew'
+
+      - run:
+          name: Generate Antlr
+          command: './gradlew :platform:pansyqq:genAntlr'
+
+      - run:
           name: Run Assemble
-          command: chmod +x ./gradlew && ./gradlew assembleRelease --info --warning-mode=all
+          command: './gradlew assembleRelease --info --warning-mode=all'
+
       - store_artifacts:
           path: 'platform/pansyqq/build/outputs/apk/release'
