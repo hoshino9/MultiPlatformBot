@@ -11,5 +11,5 @@ jobs:
       - run:
           name: Run Assemble
           command: ./gradlew assembleRelease --info --warning-mode=all
-      - store_artifaces:
+      - store_artifacts:
           path: 'platform/pansyqq/build/outputs/apk/release'
