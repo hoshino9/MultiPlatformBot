@@ -1,10 +1,9 @@
 package org.hoshino9.robot.message.component
 
-import org.hoshino9.robot.message.ConsoleMessage
 import org.hoshino9.robot.message.Message
 import java.util.*
 
-open class ComponentsMessage : ConsoleMessage() {
+open class ComponentsMessage : ComponentMessage() {
     private val messages: MutableList<Message> = LinkedList()
 
     fun append(msg: Message): ComponentsMessage {
