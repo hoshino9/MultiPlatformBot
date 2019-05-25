@@ -18,10 +18,7 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
 
     @Name("菜单")
     fun menu() {
-//        group.send(RawStringMessage("什么都没有"))
-        buildMessage {
-            append("什么都没有2")
-        }.run(dialog::send)
+        group.send(RawStringMessage("什么都没有"))
     }
 
     @Name("搜索")
@@ -35,7 +32,7 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
                 method.findAnnotation<Name>()?.name == name
             }.takeIf { it.isNotEmpty() }?.apply { methods = this } != null
         }?.let { _ ->
-//            method.parameters.drop(1).joinToString(transform = ::typeTrans).let {
+            //            method.parameters.drop(1).joinToString(transform = ::typeTrans).let {
 //                RawStringMessage("$name($it)")
 //            }
             methods.joinToString(separator = "\n") { method ->
