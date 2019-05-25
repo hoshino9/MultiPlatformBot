@@ -43,8 +43,6 @@ class Money(context: MessageReceiveHandler.Context) : GroupHandler(context) {
             }
         } catch (e: SignInException) {
             e.errorMessage
-        }.also { it: Message ->
-            throw Exception(it.toString())
         }.run(dialog::send)
     }
 

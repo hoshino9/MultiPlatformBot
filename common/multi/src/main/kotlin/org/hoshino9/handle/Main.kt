@@ -18,7 +18,10 @@ class Main(context: MessageReceiveHandler.Context) : GroupHandler(context) {
 
     @Name("菜单")
     fun menu() {
-        group.send(RawStringMessage("什么都没有"))
+//        group.send(RawStringMessage("什么都没有"))
+        buildMessage {
+            append("什么都没有2")
+        }.run(dialog::send)
     }
 
     @Name("搜索")
