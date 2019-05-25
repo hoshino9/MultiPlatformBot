@@ -49,7 +49,7 @@ public class PluginEnableActivity extends Activity {
                     new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, 9);
         }
 
-        Api.INSTANCE.setRoot(Environment.getExternalStorageDirectory().toPath().resolve("hoshino-plugin").toString());
+        Api.INSTANCE.setRoot(Environment.getExternalStorageDirectory() + "/hoshino-plugin");
 
         finish();
     }
