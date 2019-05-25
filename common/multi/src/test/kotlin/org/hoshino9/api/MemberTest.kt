@@ -11,6 +11,7 @@ class MemberTest {
     }
 
     private val member: Member get() = Member(Group(999), 123)
+    private val other: Member get() = Member(Group(999), 321)
 
     @Test
     fun money() {
@@ -23,6 +24,7 @@ class MemberTest {
     fun signIn() {
         val money = member.money
         try {
+            other.signIn()
             val info = member.signIn()
 
             assertEquals(money + info.money, member.money)

@@ -17,7 +17,7 @@ data class SignInInfo(val money: Long)
 
 open class Member(val group: Group, id: Long) : DialogMember(id) {
     private val infoPath = "$root/$group/$id/config.json"
-    private val property = JsonProperty(File(infoPath), defaultProperty)
+    private val property = JsonProperty(File(infoPath), defaultProperty.deepCopy())
 
     private var signInDate: String by property
 
@@ -51,7 +51,8 @@ open class Member(val group: Group, id: Long) : DialogMember(id) {
     }
 
     companion object {
-        val defaultProperty: JsonObject = json {
+        // 使用时必须 deepCopy
+        private val defaultProperty: JsonObject = json {
             "money" to 0
             "signInDate" to "1970:01:01"
         }
