@@ -20,14 +20,8 @@ object MessageHandler : MessageReceiveHandler {
                 call.functionName == method.findAnnotation<HandlerContainer.Name>()?.name
             }.takeIf { it.isNotEmpty() } ?: return@forEach
 
-            try {
-                method.firstOrNull { it.parameters.size == call.arguments.size + 1 }
-                    ?.call(container, *call.arguments)
-            } catch (e: Throwable) {
-                e.printStackTrace()
-            } finally {
-                return
-            }
+            method.firstOrNull { it.parameters.size == call.arguments.size + 1 }
+                ?.call(container, *call.arguments)
         }
     }
 }

@@ -7,6 +7,7 @@ import org.hoshino9.robot.dialog.Member
 import org.hoshino9.robot.handle.GroupHandler
 import org.hoshino9.robot.handle.HandlerContainer
 import org.hoshino9.robot.handle.MessageReceiveHandler
+import org.hoshino9.robot.message.Message
 import org.hoshino9.robot.message.RawStringMessage
 import org.hoshino9.robot.message.component.AtMessage
 import kotlin.reflect.KClass
@@ -42,6 +43,8 @@ class Money(context: MessageReceiveHandler.Context) : GroupHandler(context) {
             }
         } catch (e: SignInException) {
             e.errorMessage
+        }.also { it: Message ->
+            throw Exception(it.toString())
         }.run(dialog::send)
     }
 

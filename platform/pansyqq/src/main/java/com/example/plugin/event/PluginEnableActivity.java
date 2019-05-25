@@ -44,11 +44,6 @@ public class PluginEnableActivity extends Activity {
             pansy=new PansyAPI("com.example.plugin");
         }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, 9);
-        }
-
         Api.INSTANCE.setRoot(Environment.getExternalStorageDirectory() + "/hoshino-plugin");
 
         finish();
