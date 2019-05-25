@@ -22,3 +22,6 @@ jobs:
 
       - store_artifacts:
           path: 'platform/pansyqq/build/outputs/apk/release'
+
+      - store_artifacts:
+          path: '.'
