@@ -74,5 +74,3 @@ task genAntlr(type: JavaExec) {
             "-package", packageName,
             "-o", "./src/main/gen/${packageName.replace('.', '/')}")
 }
-
-assemble.dependsOn(genAntlr)

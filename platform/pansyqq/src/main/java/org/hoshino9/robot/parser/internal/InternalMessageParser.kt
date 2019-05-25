@@ -8,10 +8,10 @@ import org.hoshino9.robot.message.Message
 import org.hoshino9.robot.message.RawStringMessage
 import org.hoshino9.robot.message.component.ImageMessage
 import org.hoshino9.robot.parser.FunctionCall
-import org.hoshino9.robot.parser.MessageParser
+import org.hoshino9.robot.parser.MessageParser as IMessageParser
 import java.net.URI
 
-object InternalMessageParser : MessageParser {
+object InternalMessageParser : IMessageParser {
     private class StringParser(val str: String) {
         private var index = 0
         private val current get() = str[index]
@@ -48,7 +48,7 @@ object InternalMessageParser : MessageParser {
     private val atRegex = Regex("""\[At:(\d+)]""")
     private val imgRegex = Regex("""\[img:(\w+)="(.+?)"]""")
 
-    private fun convertValue(ctx: org.hoshino9.robot.parser.internal.MessageParser.ValueContext): Any? {
+    private fun convertValue(ctx: MessageParser.ValueContext): Any? {
         return when {
             ctx.array() != null -> {
                 ctx.array().value().map {
