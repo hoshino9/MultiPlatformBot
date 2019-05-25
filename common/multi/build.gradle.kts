@@ -1,3 +1,7 @@
+plugins {
+    kotlin("jvm") version "1.3.31"
+}
+
 val antlrSource = "./src/test/resources/Message.g4"
 val packageName = "org.hoshino9.robot.parser.internal"
 
@@ -15,11 +19,19 @@ val genAntlr = task<JavaExec>("genAntlr") {
         "-o", "./src/test/gen/${packageName.replace('.', '/')}")
 }
 
+repositories {
+    jcenter()
+}
+
 dependencies {
     compile(fileTree(mapOf("dir" to "libs", "include" to "*.jar")))
-    compile(project(":handler"))
+    compile(project(":common:handler"))
+    compile(kotlin("reflect"))
     compile(group = "com.google.code.gson", name = "gson", version = "2.8.5")
-    compileOnly(project(":base"))
+    compileOnly(project(":common:base"))
+
     testCompile(kotlin("test-junit"))
-    testCompile(project(":base"))
+    testCompile(project(":common:base"))
 }
+
+tasks["compileKotlin"].dependsOn(genAntlr)
