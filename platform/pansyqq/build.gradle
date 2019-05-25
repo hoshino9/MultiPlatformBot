@@ -70,7 +70,7 @@ task genAntlr(type: JavaExec) {
 
     classpath = files("../../common/multi/libs/antlr-4.7.2-complete.jar")
     main = 'org.antlr.v4.Tool'
-    args("./src/main/antlr/Message.g4",
+    args("Message.g4",
             "-package", packageName,
             "-o", "./src/main/gen/${packageName.replace('.', '/')}")
 }
